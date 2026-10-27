@@ -4,16 +4,20 @@ import { initSlider } from "./slider.js";
 const menuBtn = document.getElementById("menu-btn");
 const mobileMenu = document.getElementById("mobile-menu");
 
-menuBtn.addEventListener("click", () => {
-  mobileMenu.classList.toggle("hidden");
-});
+if (menuBtn && mobileMenu) {
+  menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+}
 
 // 2. Add a shadow to the navbar once the page is scrolled
 const header = document.getElementById("site-header");
 
-window.addEventListener("scroll", () => {
-  header.classList.toggle("shadow-lg", window.scrollY > 10);
-});
+if (header) {
+  window.addEventListener("scroll", () => {
+    header.classList.toggle("shadow-lg", window.scrollY > 10);
+  });
+}
 
-// 3. Start the hero photo slider
+// 3. Start the hero photo slider (does nothing on pages without a slider)
 initSlider();
