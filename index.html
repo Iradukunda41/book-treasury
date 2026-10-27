@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <link rel="preconnect" href="https://fonts.googleapis.com" />
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+     <title>Book Treasury</title>
+
+     <!-- Custom colors and font for Tailwind v4 -->
+     <style type="text/tailwindcss">
+          @theme {
+      --color-brand: #0a3d1f;
+      --color-accent: #b9700b;
+      --font-sans: "Poppins", sans-serif;
+    }
+  </style>
+
+     <!-- Custom page background (normal CSS) -->
+     <style>
+          body {
+               background-color: #fffaf2;
+               background-image:
+                    radial-gradient(circle at 8% 12%, rgba(185, 112, 11, 0.16), transparent 40%),
+                    radial-gradient(circle at 92% 22%, rgba(10, 61, 31, 0.10), transparent 42%),
+                    radial-gradient(circle at 50% 100%, rgba(251, 191, 36, 0.16), transparent 45%),
+                    radial-gradient(rgba(10, 61, 31, 0.07) 1px, transparent 1px);
+               background-size: auto, auto, auto, 24px 24px;
+               background-attachment: fixed;
+          }
+     </style>
+</head>
+
+<body class="flex min-h-screen flex-col font-sans text-gray-700">
+
+     <!-- NAVBAR -->
+     <header id="site-header"
+          class="sticky top-0 z-50 border-b border-amber-100 bg-white/80 backdrop-blur-md transition-shadow duration-300">
+          <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+
+               <!-- Brand -->
+               <a href="index.html" class="group flex items-center gap-3">
+                    <span
+                         class="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent to-amber-500 text-white shadow-md transition duration-300 group-hover:rotate-6">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="h-6 w-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                   d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                         </svg>
+                    </span>
+                    <span class="text-xl font-extrabold tracking-tight text-brand">Book <span
+                              class="text-accent">Treasury</span></span>
+               </a>
+
+               <!-- Desktop links -->
+               <ul class="hidden items-center gap-2 md:flex">
+                    <li>
+                         <a href="index.html"
+                              class="rounded-full bg-amber-100 px-5 py-2 font-medium text-accent">Home</a>
+                    </li>
+                    <li>
+                         <a href="favorites.html"
+                              class="flex items-center gap-1.5 rounded-full px-5 py-2 font-medium text-brand transition-colors duration-300 hover:bg-amber-100 hover:text-accent">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                              </svg>
+                              Favorites
+                         </a>
+                    </li>
+                    <li>
+                         <a href="about.html"
+                              class="rounded-full px-5 py-2 font-medium text-brand transition-colors duration-300 hover:bg-amber-100 hover:text-accent">About</a>
+                    </li>
+               </ul>
+
+               <!-- Desktop button -->
+               <a href="#books"
+                    class="hidden items-center gap-2 rounded-full bg-gradient-to-r from-accent to-amber-500 px-6 py-2.5 font-semibold text-white shadow-lg shadow-amber-500/30 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl md:inline-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                         stroke="currentColor" class="h-5 w-5">
+                         <path stroke-linecap="round" stroke-linejoin="round"
+                              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                    Browse Books
+               </a>
+
+               <!-- Hamburger (mobile only) -->
+               <button id="menu-btn" class="rounded-lg p-2 text-brand transition hover:bg-amber-50 md:hidden"
+                    aria-label="Toggle menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                         stroke="currentColor" class="h-7 w-7">
+                         <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+               </button>
+          </nav>
+
+          <!-- Mobile menu -->
+          <ul id="mobile-menu"
+               class="hidden space-y-1 border-t border-amber-100 bg-white/95 px-6 py-4 font-medium text-brand md:hidden">
+               <li><a href="index.html" class="block rounded-lg bg-amber-50 px-3 py-2 text-accent">Home</a></li>
+               <li><a href="favorites.html" class="block rounded-lg px-3 py-2 hover:bg-amber-50">Favorites</a></li>
+               <li><a href="about.html" class="block rounded-lg px-3 py-2 hover:bg-amber-50">About</a></li>
+               <li><a href="#books"
+                         class="mt-2 block rounded-full bg-gradient-to-r from-accent to-amber-500 py-2.5 text-center font-semibold text-white">Browse
+                         Books</a></li>
+          </ul>
+     </header>
+
+     <!-- HERO -->
+     <section>
+          <div class="mx-auto grid max-w-7xl items-center gap-12 px-6 py-12 md:grid-cols-2 md:py-20">
+
+               <!-- Left: text -->
+               <div>
+                    <!-- Eyebrow: side lines appear only from sm: upwards -->
+                    <div class="flex items-center gap-4">
+                         <span class="hidden h-px w-10 bg-accent sm:block"></span>
+                         <span
+                              class="text-xs font-semibold uppercase tracking-[0.25em] text-accent sm:text-sm sm:tracking-[0.3em]">Read.
+                              Explore. Save.</span>
+                         <span class="hidden h-px w-10 bg-accent sm:block"></span>
+                    </div>
+
+                    <h1 class="mt-6 text-4xl font-extrabold leading-tight text-brand md:text-6xl">
+                         Your Next <span class="italic text-accent">Favorite</span> Story Is Waiting
+                    </h1>
+
+                    <p class="mt-6 text-lg leading-relaxed text-gray-600">
+                         <span class="font-bold text-accent">Book Treasury</span> lets you browse
+                         real books, search by title and save your favorites, all in one beautiful place.
+                    </p>
+
+                    <!-- Features (things the app really does) -->
+                    <ul class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-brand">
+                         <li class="flex items-center gap-2 font-medium">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                   stroke="currentColor" class="h-5 w-5 text-accent">
+                                   <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                              </svg>
+                              Search by title
+                         </li>
+                         <li class="flex items-center gap-2 font-medium">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                   stroke="currentColor" class="h-5 w-5 text-accent">
+                                   <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                              </svg>
+                              Save your favorites
+                         </li>
+                         <li class="flex items-center gap-2 font-medium">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                   stroke="currentColor" class="h-5 w-5 text-accent">
+                                   <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                              </svg>
+                              Works on any device
+                         </li>
+                    </ul>
+
+                    <!-- Buttons -->
+                    <div class="mt-8 flex flex-wrap gap-4">
+                         <a href="#books"
+                              class="inline-flex items-center gap-2 rounded-xl border-2 border-accent px-6 py-3 text-lg font-semibold text-accent hover:bg-amber-50">
+                              Explore Books
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                              </svg>
+                         </a>
+                         <a href="favorites.html"
+                              class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-lg font-semibold text-white hover:bg-amber-700">
+                              My Favorites
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                              </svg>
+                         </a>
+                    </div>
+               </div>
+
+               <!-- Right: photo slider -->
+               <div id="slider" class="relative overflow-hidden rounded-2xl shadow-2xl">
+
+                    <!-- Track holding all slides side by side -->
+                    <div id="slides" class="flex transition-transform duration-700 ease-in-out">
+                         <img src="images/slide1.jpg" alt="A person reading a book by the window"
+                              class="h-80 w-full shrink-0 bg-gray-200 object-cover md:h-[28rem]" />
+                         <img src="images/slide2.jpg" alt="An open book in warm sunlight"
+                              class="h-80 w-full shrink-0 bg-gray-200 object-cover md:h-[28rem]" />
+                         <img src="images/slide3.jpg" alt="Coffee and a book on a table"
+                              class="h-80 w-full shrink-0 bg-gray-200 object-cover md:h-[28rem]" />
+                         <img src="images/slide4.jpg" alt="Shelves filled with books"
+                              class="h-80 w-full shrink-0 bg-gray-200 object-cover md:h-[28rem]" />
+                    </div>
+
+                    <!-- Previous button -->
+                    <button id="prev-btn" aria-label="Previous slide"
+                         class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-brand shadow transition hover:bg-white">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                              stroke="currentColor" class="h-6 w-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                         </svg>
+                    </button>
+
+                    <!-- Next button -->
+                    <button id="next-btn" aria-label="Next slide"
+                         class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 text-brand shadow transition hover:bg-white">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                              stroke="currentColor" class="h-6 w-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                         </svg>
+                    </button>
+
+                    <!-- Dots (one per slide) -->
+                    <div class="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+                         <button data-dot aria-label="Go to slide 1"
+                              class="h-2.5 w-8 rounded-full bg-white transition-all duration-300"></button>
+                         <button data-dot aria-label="Go to slide 2"
+                              class="h-2.5 w-2.5 rounded-full bg-white/50 transition-all duration-300"></button>
+                         <button data-dot aria-label="Go to slide 3"
+                              class="h-2.5 w-2.5 rounded-full bg-white/50 transition-all duration-300"></button>
+                         <button data-dot aria-label="Go to slide 4"
+                              class="h-2.5 w-2.5 rounded-full bg-white/50 transition-all duration-300"></button>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <!-- BOOKS SECTION -->
+     <main id="books" class="mx-auto w-full max-w-7xl flex-1 px-6 py-16">
+
+          <!-- Section heading -->
+          <div class="mb-10 text-center">
+               <p class="text-sm font-semibold uppercase tracking-[0.3em] text-accent">Our Collection</p>
+               <h2 class="mt-2 text-3xl font-extrabold text-brand md:text-4xl">Popular Books</h2>
+               <p class="mx-auto mt-3 max-w-xl text-gray-500">Explore a handpicked selection of stories waiting to be
+                    discovered.</p>
+          </div>
+
+          <!-- Responsive grid: 1 column on mobile, 2 on tablet, 4 on desktop -->
+          <div id="book-grid" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+               <!-- Card 1 -->
+               <article
+                    class="group overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-amber-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div
+                         class="relative flex h-56 items-center justify-center bg-gradient-to-br from-amber-100 to-green-100 text-accent/60">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="h-16 w-16">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                   d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" />
+                         </svg>
+                         <button
+                              class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-gray-400 shadow transition hover:text-red-500"
+                              aria-label="Add to favorites">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                              </svg>
+                         </button>
+                    </div>
+                    <div class="p-4">
+                         <h3 class="truncate font-semibold text-brand">Book Title 1</h3>
+                         <p class="text-sm text-gray-500">Author Name</p>
+                         <p class="mt-2 text-xs font-medium text-accent">Year of published</p>
+                    </div>
+               </article>
+
+               <!-- Card 2 -->
+               <article
+                    class="group overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-amber-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div
+                         class="relative flex h-56 items-center justify-center bg-gradient-to-br from-amber-100 to-green-100 text-accent/60">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="h-16 w-16">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                   d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" />
+                         </svg>
+                         <button
+                              class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-gray-400 shadow transition hover:text-red-500"
+                              aria-label="Add to favorites">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                              </svg>
+                         </button>
+                    </div>
+                    <div class="p-4">
+                         <h3 class="truncate font-semibold text-brand">Book Title 2</h3>
+                         <p class="text-sm text-gray-500">Author Name</p>
+                         <p class="mt-2 text-xs font-medium text-accent">Year of published</p>
+                    </div>
+               </article>
+
+               <!-- Card 3 -->
+               <article
+                    class="group overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-amber-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div
+                         class="relative flex h-56 items-center justify-center bg-gradient-to-br from-amber-100 to-green-100 text-accent/60">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="h-16 w-16">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                   d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" />
+                         </svg>
+                         <button
+                              class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-gray-400 shadow transition hover:text-red-500"
+                              aria-label="Add to favorites">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                              </svg>
+                         </button>
+                    </div>
+                    <div class="p-4">
+                         <h3 class="truncate font-semibold text-brand">Book Title 3</h3>
+                         <p class="text-sm text-gray-500">Author Name</p>
+                         <p class="mt-2 text-xs font-medium text-accent">Year of published</p>
+                    </div>
+               </article>
+
+               <!-- Card 4 -->
+               <article
+                    class="group overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-amber-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div
+                         class="relative flex h-56 items-center justify-center bg-gradient-to-br from-amber-100 to-green-100 text-accent/60">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="h-16 w-16">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                   d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" />
+                         </svg>
+                         <button
+                              class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-gray-400 shadow transition hover:text-red-500"
+                              aria-label="Add to favorites">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                              </svg>
+                         </button>
+                    </div>
+                    <div class="p-4">
+                         <h3 class="truncate font-semibold text-brand">Book Title 4</h3>
+                         <p class="text-sm text-gray-500">Author Name</p>
+                         <p class="mt-2 text-xs font-medium text-accent">Year of published</p>
+                    </div>
+               </article>
+
+               <!-- Card 5 -->
+               <article
+                    class="group overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-amber-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div
+                         class="relative flex h-56 items-center justify-center bg-gradient-to-br from-amber-100 to-green-100 text-accent/60">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="h-16 w-16">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                   d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" />
+                         </svg>
+                         <button
+                              class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-gray-400 shadow transition hover:text-red-500"
+                              aria-label="Add to favorites">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                              </svg>
+                         </button>
+                    </div>
+                    <div class="p-4">
+                         <h3 class="truncate font-semibold text-brand">Book Title 5</h3>
+                         <p class="text-sm text-gray-500">Author Name</p>
+                         <p class="mt-2 text-xs font-medium text-accent">Year of published</p>
+                    </div>
+               </article>
+
+               <!-- Card 6 -->
+               <article
+                    class="group overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-amber-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div
+                         class="relative flex h-56 items-center justify-center bg-gradient-to-br from-amber-100 to-green-100 text-accent/60">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="h-16 w-16">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                   d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" />
+                         </svg>
+                         <button
+                              class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-gray-400 shadow transition hover:text-red-500"
+                              aria-label="Add to favorites">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                              </svg>
+                         </button>
+                    </div>
+                    <div class="p-4">
+                         <h3 class="truncate font-semibold text-brand">Book Title 6</h3>
+                         <p class="text-sm text-gray-500">Author Name</p>
+                         <p class="mt-2 text-xs font-medium text-accent">Year of published</p>
+                    </div>
+               </article>
+
+               <!-- Card 7 -->
+               <article
+                    class="group overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-amber-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div
+                         class="relative flex h-56 items-center justify-center bg-gradient-to-br from-amber-100 to-green-100 text-accent/60">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="h-16 w-16">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                   d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" />
+                         </svg>
+                         <button
+                              class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-gray-400 shadow transition hover:text-red-500"
+                              aria-label="Add to favorites">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                              </svg>
+                         </button>
+                    </div>
+                    <div class="p-4">
+                         <h3 class="truncate font-semibold text-brand">Book Title 7</h3>
+                         <p class="text-sm text-gray-500">Author Name</p>
+                         <p class="mt-2 text-xs font-medium text-accent">Year of published</p>
+                    </div>
+               </article>
+
+               <!-- Card 8 -->
+               <article
+                    class="group overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-amber-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div
+                         class="relative flex h-56 items-center justify-center bg-gradient-to-br from-amber-100 to-green-100 text-accent/60">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                              stroke="currentColor" class="h-16 w-16">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                   d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" />
+                         </svg>
+                         <button
+                              class="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-gray-400 shadow transition hover:text-red-500"
+                              aria-label="Add to favorites">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                   stroke="currentColor" class="h-5 w-5">
+                                   <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                              </svg>
+                         </button>
+                    </div>
+                    <div class="p-4">
+                         <h3 class="truncate font-semibold text-brand">Book Title 8</h3>
+                         <p class="text-sm text-gray-500">Author Name</p>
+                         <p class="mt-2 text-xs font-medium text-accent">Year of published</p>
+                    </div>
+               </article>
+
+          </div>
+     </main>
+
+     <!-- FOOTER -->
+     <footer class="bg-brand text-green-100">
+          <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-6 text-sm md:flex-row">
+               <p>&copy; 2026 Book Treasury. All rights reserved.</p>
+               <p class="flex items-center gap-1.5">
+                    Made with
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                         class="h-4 w-4 text-red-400">
+                         <path
+                              d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                    </svg>
+                    for book lovers everywhere
+               </p>
+          </div>
+     </footer>
+
+     <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
