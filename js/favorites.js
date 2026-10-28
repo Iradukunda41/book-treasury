@@ -12,6 +12,9 @@ export function getFavorites() {
 // Save the list to localStorage (localStorage only stores text, so we use JSON)
 function saveFavorites(list) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+
+  // Tell the page that favorites changed (the navbar count listens for this)
+  window.dispatchEvent(new Event("favorites:changed"));
 }
 
 export function isFavorite(id) {
