@@ -32,12 +32,28 @@ export function createBookCard(book, favorite) {
     ? `<p class="mt-2 text-xs font-medium text-accent">Year of published: ${escapeHTML(book.year)}</p>`
     : "";
 
+  // The book icon is always drawn first (it is the fallback)
+  const iconHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-16 w-16">
+         <path stroke-linecap="round" stroke-linejoin="round" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" />
+       </svg>`;
+
+  // "default=false" makes Open Library answer 404 when a cover does not exist
+  // (instead of sending a blank white image), so onerror can remove the image
+  // and the icon underneath shows.
+  const coverUrl = book.cover
+    ? book.cover + (book.cover.includes("?") ? "&" : "?") + "default=false"
+    : null;
+
+  const coverHTML =
+    iconHTML +
+    (coverUrl
+      ? `<img src="${escapeHTML(coverUrl)}" alt="Cover of ${title}" loading="lazy" onerror="this.remove()" onload="if (this.naturalWidth < 50) this.remove()" class="absolute inset-0 h-full w-full object-cover" />`
+      : "");
+
   return `
     <article class="group overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-amber-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
-      <div class="relative flex h-56 items-center justify-center bg-gradient-to-br from-amber-100 to-green-100 text-accent/60">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-16 w-16">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" />
-        </svg>
+      <div class="relative flex h-56 items-center justify-center border-b border-amber-100 bg-gradient-to-br from-amber-100 to-green-100 text-accent/60">
+        ${coverHTML}
         <button
           data-fav-id="${id}"
           aria-pressed="${favorite}"
