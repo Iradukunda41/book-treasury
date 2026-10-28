@@ -34,19 +34,32 @@ function showError() {
   `;
 }
 
+// Counts every search. Each search gets its own number, so we can tell
+// which answer belongs to the LAST search the user made.
+let latestRequest = 0;
+
 // Get books from the API and draw them
 async function loadBooks(query) {
   lastQuery = query;
+  const requestId = ++latestRequest; // this search's number
   showLoading();
 
   try {
-    currentBooks = await fetchBooks(query);
+    const books = await fetchBooks(query);
+
+    // A newer search started while we waited: ignore this old answer
+    if (requestId !== latestRequest) return;
+
+    currentBooks = books;
     renderBooks(
       grid,
       currentBooks,
       `No books found for "${query}". Try another title.`
     );
   } catch (error) {
+    // An old search failing must not replace a newer search either
+    if (requestId !== latestRequest) return;
+
     console.error(error); // the real reason stays visible for us in DevTools
     currentBooks = [];
     showError();
